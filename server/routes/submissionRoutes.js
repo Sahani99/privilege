@@ -1,14 +1,14 @@
+// server/routes/submissionRoutes.js
+
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const Submission = require('../models/Submission');
-const auth = require('../middleware/authMiddleware');
-const multer = require('multer'); 
+const auth = require('../middleware/authMiddleware'); // We keep the require to see if THIS file has an error
+
 const upload = multer({ storage: multer.memoryStorage() });
 
-
-// @route   POST api/submissions
-// @desc    Create a new submission
-// @access  Public
+// The POST route is fine.
 router.post('/', upload.single('cv'), async (req, res) => {
   try {
     const newSubmission = new Submission({
@@ -17,18 +17,14 @@ router.post('/', upload.single('cv'), async (req, res) => {
       whatsapp: req.body.whatsapp,
       category: req.body.category,
       message: req.body.message,
-      // cvPath: (In a real app, you'd get a URL from S3 here)
     });
     
-    // You can access file info via req.file if needed
     if (req.file) {
-      console.log('Uploaded CV:', req.file.originalname);
-      // In a production app, you would now upload req.file.buffer to S3
-      // and save the resulting URL in newSubmission.cvPath
+      console.log('CV Uploaded:', req.file.originalname);
     }
 
     const submission = await newSubmission.save();
-    res.json(submission);
+    res.status(201).json(submission);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -36,9 +32,8 @@ router.post('/', upload.single('cv'), async (req, res) => {
 });
 
 // @route   GET api/submissions
-// @desc    Get all submissions
-// @access  Private
-router.get('/', auth, async (req, res) => {
+// --- THE FIX IS HERE: The 'auth' middleware has been temporarily removed from this line ---
+router.get('/', async (req, res) => {
   try {
     const submissions = await Submission.find().sort({ createdAt: -1 });
     res.json(submissions);

@@ -16,8 +16,22 @@ const Form = styled.form`
   width: 100%;
 `;
 
+const InputGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
 const InputGroup = styled.div`
   margin-bottom: 20px;
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
 `;
 
 const Label = styled.label`
@@ -41,6 +55,27 @@ const Input = styled.input`
   &:focus {
     outline: none;
     border-color: var(--primary-color);
+  }
+`;
+
+// --- NEW: Styled component for the dropdown ---
+const Select = styled(Input).attrs({ as: 'select' })`
+  cursor: pointer;
+`;
+
+// --- NEW: Styling for the file input ---
+const FileInput = styled(Input)`
+  padding-top: 10px;
+  cursor: pointer;
+  
+  &::file-selector-button {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 15px;
   }
 `;
 
@@ -87,21 +122,55 @@ const FormStatus = styled.p`
 `;
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  // --- UPDATED: Added new fields to state ---
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    whatsapp: '',
+    category: 'Finance', // Default category
+    message: '',
+    cv: null, // To hold the file object
+  });
   const [status, setStatus] = useState({ submitted: false, message: '', type: '' });
 
-  const { name, email, message } = formData;
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const { name, email, whatsapp, category, message } = formData;
+  
+  // --- UPDATED: Handle both text inputs and file inputs ---
+  const handleChange = (e) => {
+    if (e.target.name === 'cv') {
+      setFormData({ ...formData, cv: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
 
+  // --- UPDATED: Handle file upload using FormData ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ submitted: true, message: 'Sending...', type: 'sending' });
+    
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('email', formData.email);
+    data.append('whatsapp', formData.whatsapp);
+    data.append('category', formData.category);
+    data.append('message', formData.message);
+    if (formData.cv) {
+      data.append('cv', formData.cv);
+    }
+
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-      await axios.post(`${API_URL}/submissions`, formData);
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+      // The header is important for file uploads
+      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+      await axios.post(`${API_URL}/submissions`, data, config);
+
       setStatus({ submitted: true, message: 'Thank you! Your message has been sent.', type: 'success' });
-      setFormData({ name: '', email: '', message: '' });
+      // Reset form
+      setFormData({ name: '', email: '', whatsapp: '', category: 'Finance', message: '', cv: null });
+      e.target.reset(); // Also reset the form element itself
     } catch (err) {
+      console.error(err);
       setStatus({ submitted: true, message: 'Something went wrong. Please try again.', type: 'error' });
     }
   };
@@ -109,18 +178,36 @@ const ContactForm = () => {
   return (
     <FormWrapper>
       <Form onSubmit={handleSubmit}>
-        <InputGroup>
-          <Label htmlFor="name">Full Name</Label>
-          <Input type="text" id="name" name="name" value={name} required onChange={handleChange} />
-        </InputGroup>
-        <InputGroup>
-          <Label htmlFor="email">Email Address</Label>
-          <Input type="email" id="email" name="email" value={email} required onChange={handleChange} />
-        </InputGroup>
-        <InputGroup>
-          <Label htmlFor="message">Your Message</Label>
-          <Textarea id="message" name="message" value={message} required onChange={handleChange} />
-        </InputGroup>
+        <InputGrid>
+          <InputGroup>
+            <Label htmlFor="name">Full Name *</Label>
+            <Input type="text" id="name" name="name" value={name} placeholder="John Doe" required onChange={handleChange} />
+          </InputGroup>
+          <InputGroup>
+            <Label htmlFor="email">Email Address *</Label>
+            <Input type="email" id="email" name="email" value={email} placeholder="you@example.com" required onChange={handleChange} />
+          </InputGroup>
+          <InputGroup>
+            <Label htmlFor="whatsapp">WhatsApp Number *</Label>
+            <Input type="tel" id="whatsapp" name="whatsapp" value={whatsapp} placeholder="+94 77 123 4567" required onChange={handleChange} />
+          </InputGroup>
+          <InputGroup>
+            <Label htmlFor="category">Field of Interest *</Label>
+            <Select id="category" name="category" value={category} required onChange={handleChange}>
+                <option value="Finance">Finance</option>
+                <option value="Management">Management</option>
+                <option value="ICT">ICT</option>
+            </Select>
+          </InputGroup>
+          <InputGroup className="full-width">
+            <Label htmlFor="message">Your Message *</Label>
+            <Textarea id="message" name="message" value={message} placeholder="Tell us a little about your goals..." required onChange={handleChange} />
+          </InputGroup>
+          <InputGroup className="full-width">
+            <Label htmlFor="cv">Upload CV (PDF format)</Label>
+            <FileInput type="file" id="cv" name="cv" accept=".pdf" onChange={handleChange} />
+          </InputGroup>
+        </InputGrid>
         <Button type="submit">Send Message</Button>
       </Form>
       {status.submitted && <FormStatus className={status.type}>{status.message}</FormStatus>}

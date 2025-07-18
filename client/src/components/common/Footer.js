@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import logo from '../../assets/images/logo.jpg'; // Make sure you have a logo suitable for dark backgrounds
+import logo from '../../assets/images/logo.png'; // Make sure you have a logo suitable for dark backgrounds
 
 const FooterContainer = styled.footer`
   background-color: var(--surface-color);

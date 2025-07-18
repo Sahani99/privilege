@@ -62,7 +62,8 @@ const AboutSnippet = () => {
   };
 
   return (
-    <AboutContainer>
+     <section id="about">
+      <AboutContainer>
       <ImageWrapper
         variants={imageVariants}
         initial="hidden"
@@ -87,6 +88,7 @@ const AboutSnippet = () => {
         </Description>
       </ContentWrapper>
     </AboutContainer>
+    </section>
   );
 };
 

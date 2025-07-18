@@ -81,9 +81,10 @@ const ServicesSection = () => {
   };
 
   return (
-    <ServicesContainer>
-      <SectionTitle>Our Core Services</SectionTitle>
-      <ServicesGrid>
+   <section id="services"> 
+      <ServicesContainer>
+        <SectionTitle>Our Core Services</SectionTitle>
+        <ServicesGrid>
         {services.map((service, index) => (
           <ServiceCard
             key={index}
@@ -98,7 +99,8 @@ const ServicesSection = () => {
           </ServiceCard>
         ))}
       </ServicesGrid>
-    </ServicesContainer>
+      </ServicesContainer>
+    </section> 
   );
 };
 

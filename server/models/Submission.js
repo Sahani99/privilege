@@ -6,7 +6,9 @@ const SubmissionSchema = new Schema({
   email: { type: String, required: true },
   message: { type: String, required: true },
   cvPath: { type: String }, // We will handle file uploads later if needed
-  createdAt: { type: Date, default: Date.now }
+  whatsapp: { type: String, required: true },
+  category: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Submission', SubmissionSchema);

@@ -11,24 +11,34 @@ require('dotenv').config();
 
 const app = express();
 
-console.log("[DEBUG] V7 MONGO_URI is:", process.env.MONGO_URI);
+// 1. First, handle CORS to allow requests.
+const allowedOrigins = [
+  'https://privilege-client-sahani99.vercel.app', // <-- REPLACE WITH YOUR CLIENT URL
+  'https://privilege-admin-sahani99.vercel.app', // <-- REPLACE WITH YOUR ADMIN URL
+  'http://localhost:3000' // For local development
+];
 
-// --- THE FIX IS HERE: We are using the simplest CORS config ---
-app.use(cors());
-// -----------------------------------------------------------
+const corsOptions = {
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  optionsSuccessStatus: 200
+};
 
-// Now add the other middleware
+app.use(cors(corsOptions)); // If you don't have this, that's fine too.
+
+// 2. Second, teach the server to parse JSON bodies. THIS IS THE FIX.
 app.use(express.json());
 
-// And re-enable the routes
+// 3. Third, define your API routes.
 app.use('/api/submissions', require('./routes/submissionRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
-
-// Check if MONGO_URI exists
-if (!process.env.MONGO_URI) {
-  console.error("FATAL ERROR: V7 - MONGO_URI is not defined.");
-  process.exit(1);
-}
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('V7: MongoDB Connected Successfully...'))

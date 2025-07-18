@@ -1,13 +1,17 @@
 import React from 'react';
 import HeroSection from '../components/home/HeroSection';
-import Testimonials from '../components/home/Testimonials';
+import ServicesSection from '../components/home/ServicesSection';
+import AboutSnippet from '../components/home/AboutSnippet';
+import StatsSection from '../components/home/StatsSection';
 
 const HomePage = () => {
   return (
     <div>
       <HeroSection />
-      {/* You can add more sections here like 'Services' later */}
-      <Testimonials />
+      <ServicesSection />
+      <AboutSnippet />
+      <StatsSection />
+      {/* You can add more sections like Testimonials here later */ }
     </div>
   );
 };

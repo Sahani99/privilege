@@ -58,7 +58,7 @@ const DashboardPage = () => {
 
     const fetchSubmissions = async () => {
       try {
-        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
         const res = await axios.get(`${API_URL}/submissions`);
         setSubmissions(res.data);
       } catch (err) {

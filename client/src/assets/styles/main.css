@@ -1,17 +1,26 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 :root {
-  --primary-color: #FFD700; /* A vibrant yellow */
-  --secondary-color: #000000; /* Black */
-  --background-color: #FFFFFF; /* White */
-  --text-color: #333;
+  --primary-color: #FFC107; /* A rich, 'goldish yellow' for Sri Lanka */
+  --background-color: #121212; /* A deep, off-black for the main background */
+  --surface-color: #1E1E1E; /* A slightly lighter charcoal for cards and surfaces */
+  
+  --heading-color: #FFFFFF; /* Pure white for high-impact headings */
+  --text-color: rgba(255, 255, 255, 0.87); /* Off-white for body text, better for readability */
+  --text-color-muted: rgba(255, 255, 255, 0.6); /* Muted text for less important info */
+
+  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-family);
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
   color: var(--text-color);
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 *, *:before, *:after {

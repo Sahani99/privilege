@@ -6,7 +6,22 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors()); // Allows cross-origin requests
+// app.use(cors()); // Allows cross-origin requests
+const corsOptions = {
+  // Replace with your Vercel frontend URL. VERY IMPORTANT.
+  origin: "https://privilege-client.vercel.app", 
+  methods: "GET,POST,PUT,DELETE", // Allow these methods
+  allowedHeaders: "Content-Type,Authorization,x-auth-token", // Allow these headers
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+
+// 2. Handle preflight OPTIONS requests for all routes
+// This will respond to the browser's security check before it sends the real request.
+app.options('*', cors(corsOptions));
+
+// 3. Use the CORS middleware for all other requests
+app.use(cors(corsOptions));
+
 app.use(express.json()); // Allows us to parse JSON in request bodies
 
 // Connect to MongoDB

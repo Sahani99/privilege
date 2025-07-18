@@ -1,38 +1,49 @@
 // server/server.js
 
 // =================================================================
-console.log("--- V5: Adding back Mongoose connection. ---");
+console.log("--- V6: Adding back CORS middleware. ---");
 // =================================================================
 
 const express = require('express');
-const mongoose = require('mongoose'); // Added back
-require('dotenv').config(); // Added back
+const mongoose = require('mongoose');
+const cors = require('cors'); // Added back
+require('dotenv').config();
 
 const app = express();
 
-console.log("[DEBUG] V5 MONGO_URI is:", process.env.MONGO_URI);
+console.log("[DEBUG] V6 MONGO_URI is:", process.env.MONGO_URI);
 
-// Check if MONGO_URI exists before trying to connect
+// --- ADDED BACK THE CORS CONFIGURATION ---
+const corsOptions = {
+  origin: "https://privilege-client.vercel.app", 
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization,x-auth-token",
+  optionsSuccessStatus: 200
+};
+
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
+// ------------------------------------------
+
+// Check if MONGO_URI exists
 if (!process.env.MONGO_URI) {
-  console.error("FATAL ERROR: V5 - MONGO_URI is not defined in environment. Stopping server.");
-  process.exit(1); // This stops the server immediately if the key is missing
+  console.error("FATAL ERROR: V6 - MONGO_URI is not defined.");
+  process.exit(1);
 }
 
-// --- ADDED BACK THE DATABASE CONNECTION LOGIC ---
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('V5: MongoDB Connected Successfully...'))
+  .then(() => console.log('V6: MongoDB Connected Successfully...'))
   .catch(err => {
-    console.error("V5 FATAL: MongoDB Connection Error:", err);
-    process.exit(1); // Also stop the server on connection failure
+    console.error("V6 FATAL: MongoDB Connection Error:", err);
+    process.exit(1);
   });
-// ---------------------------------------------
 
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
-  res.send('V5: Hello World! The server with a database connection is running.');
+  res.send('V6: Hello World! Server with DB and CORS is running.');
 });
 
 app.listen(PORT, () => {
-  console.log(`--- V5: Server started successfully on port ${PORT} ---`);
+  console.log(`--- V6: Server started successfully on port ${PORT} ---`);
 });

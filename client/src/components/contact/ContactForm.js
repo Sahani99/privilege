@@ -170,7 +170,7 @@ const ContactForm = () => {
       
       // --- THE FIX IS HERE ---
       // We now correctly construct the full URL path: base + /api + /submissions
-      await axios.post(`${API_URL}/api/submissions`, data, config);
+      await axios.post(`${API_URL}/submissions`, data, config);
 
       setStatus({ submitted: true, message: 'Thank you! Your message has been sent.', type: 'success' });
       setFormData({ name: '', email: '', whatsapp: '', category: 'Finance', message: '', cv: null });

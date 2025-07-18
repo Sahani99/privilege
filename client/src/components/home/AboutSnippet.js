@@ -32,11 +32,11 @@ const ContentWrapper = styled(motion.div)`
   flex: 1;
 `;
 
-const Subtitle = styled.p`
-  color: var(--primary-color);
-  font-weight: 600;
-  margin-bottom: 10px;
-`;
+// const Subtitle = styled.p`
+//   color: var(--primary-color);
+//   font-weight: 600;
+//   margin-bottom: 10px;
+// `;
 
 const Title = styled.h2`
   font-size: 2.5rem;
@@ -78,7 +78,7 @@ const AboutSnippet = () => {
          whileInView="visible"
          viewport={{ once: true, amount: 0.3 }}
       >
-        <Subtitle>ABOUT US</Subtitle>
+        {/* <Subtitle>ABOUT US</Subtitle> */}
         <Title>Your Trusted Partner in International Education</Title>
         <Description>
           We are a team of dedicated professionals committed to making your dream of studying in New Zealand a reality. With years of experience and a deep understanding of the educational landscape, we provide personalized support every step of the way.

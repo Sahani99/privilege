@@ -1,37 +1,45 @@
+// server/server.js
+
+// =================================================================
+// --- THIS IS OUR OBVIOUS DEBUGGING MESSAGE ---
+console.log("--- V2: SERVER STARTING. Attempting to load environment variables. ---");
+// =================================================================
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+// Let's print the variable to be 100% sure
+console.log("[DEBUG] The value for MONGO_URI is:", process.env.MONGO_URI);
+
+
 const app = express();
 
-// Middleware
-// app.use(cors()); // Allows cross-origin requests
 const corsOptions = {
-  // Replace with your Vercel frontend URL. VERY IMPORTANT.
   origin: "https://privilege-client.vercel.app", 
-  methods: "GET,POST,PUT,DELETE", // Allow these methods
-  allowedHeaders: "Content-Type,Authorization,x-auth-token", // Allow these headers
-  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization,x-auth-token",
+  optionsSuccessStatus: 200
 };
 
-// 2. Handle preflight OPTIONS requests for all routes
-// This will respond to the browser's security check before it sends the real request.
 app.options('*', cors(corsOptions));
-
-// 3. Use the CORS middleware for all other requests
 app.use(cors(corsOptions));
+app.use(express.json());
 
-app.use(express.json()); // Allows us to parse JSON in request bodies
+// Check if MONGO_URI exists before trying to connect
+if (!process.env.MONGO_URI) {
+  console.error("FATAL ERROR: MONGO_URI is not defined. Stopping server.");
+  process.exit(1); // This stops the server immediately if the key is missing
+}
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.error(err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => {
+    console.error("MongoDB Connection Error:", err);
+    process.exit(1); // Also stop the server on connection failure
+  });
 
-// API Routes
 app.use('/api/submissions', require('./routes/submissionRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 

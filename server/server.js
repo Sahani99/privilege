@@ -1,49 +1,48 @@
 // server/server.js
 
 // =================================================================
-console.log("--- V6: Adding back CORS middleware. ---");
+console.log("--- V7: FINAL ATTEMPT. Using simplest possible CORS. ---");
 // =================================================================
 
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Added back
+const cors = require('cors'); // Keep the import
 require('dotenv').config();
 
 const app = express();
 
-console.log("[DEBUG] V6 MONGO_URI is:", process.env.MONGO_URI);
+console.log("[DEBUG] V7 MONGO_URI is:", process.env.MONGO_URI);
 
-// --- ADDED BACK THE CORS CONFIGURATION ---
-const corsOptions = {
-  origin: "https://privilege-client.vercel.app", 
-  methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization,x-auth-token",
-  optionsSuccessStatus: 200
-};
+// --- THE FIX IS HERE: We are using the simplest CORS config ---
+app.use(cors());
+// -----------------------------------------------------------
 
-app.options('*', cors(corsOptions));
-app.use(cors(corsOptions));
-// ------------------------------------------
+// Now add the other middleware
+app.use(express.json());
+
+// And re-enable the routes
+app.use('/api/submissions', require('./routes/submissionRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
 
 // Check if MONGO_URI exists
 if (!process.env.MONGO_URI) {
-  console.error("FATAL ERROR: V6 - MONGO_URI is not defined.");
+  console.error("FATAL ERROR: V7 - MONGO_URI is not defined.");
   process.exit(1);
 }
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('V6: MongoDB Connected Successfully...'))
+  .then(() => console.log('V7: MongoDB Connected Successfully...'))
   .catch(err => {
-    console.error("V6 FATAL: MongoDB Connection Error:", err);
+    console.error("V7 FATAL: MongoDB Connection Error:", err);
     process.exit(1);
   });
 
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
-  res.send('V6: Hello World! Server with DB and CORS is running.');
+  res.send('V7: Full server with simple CORS is running.');
 });
 
 app.listen(PORT, () => {
-  console.log(`--- V6: Server started successfully on port ${PORT} ---`);
+  console.log(`--- V7: Server started successfully on port ${PORT} ---`);
 });

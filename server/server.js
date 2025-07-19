@@ -13,7 +13,7 @@ const app = express();
 
 // 1. First, handle CORS to allow requests.
 const allowedOrigins = [
-  'https://privilege-client.vercel.app/', // <-- REPLACE WITH YOUR CLIENT URL
+  'https://privilege-client.vercel.app', // <-- REPLACE WITH YOUR CLIENT URL
   'https://privilege-admin-eight.vercel.app', // <-- REPLACE WITH YOUR ADMIN URL
   'http://localhost:3000' // For local development
 ];

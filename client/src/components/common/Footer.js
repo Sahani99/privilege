@@ -147,6 +147,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { Link as ScrollLink } from 'react-scroll';
 import { FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -217,8 +218,58 @@ const CTASection = styled.div`
     line-height: 1.7;
   }
 `;
+// const LinkStyles = `
+//   /* --- FIX: Text is now permanently white --- */
+//   // color: var(--heading-color);
+//   // text-decoration: none;
+//   // font-size: 1em;
+//   // font-weight: 500;
+//   // padding-bottom: 5px;
+//   // position: relative;
+//   // transition: color 0.3s ease;
+//   // cursor: pointer;
+  
+//   // &::after {
+//   //   content: '';
+//   //   position: absolute;
+//   //   width: 0;
+//   //   height: 2px;
+//   //   bottom: 0;
+//   //   left: 0;
+//   //   background-color: var(--primary-color);
+//   //   transition: width 0.3s ease;
+//   // }
+  
+//   // /* Hover and active states still use the gold color */
+//   // &.active, &:hover {
+//   //   color: var(--primary-color);
+//   // }
+  
+//   // &.active::after, &:hover::after {
+//   //   width: 100%;
+//   // }
+//     display: inline-block;
+//   background-color: transparent;
+//   color: #ffffff;
+//   border: 2px solid #ffffff;
+//   padding: 12px 30px;
+//   border-radius: 50px;
+//   text-decoration: none;
+//   font-weight: 600;
+//   transition: all 0.3s ease;
 
-const CTAButton = styled(Link)`
+//   &:hover {
+//     background-color: #FFD700;
+//     color: #121212;
+//     border-color: #FFD700;
+//   }
+// `;
+
+// const StyledScrollLink = styled(ScrollLink)`${LinkStyles}`;
+
+
+
+const CTAButton = styled(ScrollLink)`
   display: inline-block;
   background-color: transparent;
   color: #ffffff;
@@ -304,6 +355,46 @@ const LogoImage = styled.img`
   height: 40px; /* Control the height */
   margin-bottom: 20px; /* Space below the logo */
 `;
+const LinkStyles = `
+  /* --- FIX: Text is now permanently white --- */
+  color: var(--heading-color);
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 500;
+  padding-bottom: 5px;
+  position: relative;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+  }
+  
+  /* Hover and active states still use the gold color */
+  &.active, &:hover {
+      color: #FFD700;
+    //color: var(--primary-color);
+  }
+  
+  // &.active::after, &:hover::after {
+  //   width: 100%;
+  // }
+`;
+
+const StyledScrollLink = styled(ScrollLink)`${LinkStyles}`;
+  const scrollProps = {
+    spy: true,
+    smooth: true,
+    offset: -80,
+    duration: 500,
+  };
 
 // --- MAIN FOOTER COMPONENT ---
 const Footer = () => {
@@ -313,7 +404,8 @@ const Footer = () => {
         <CTASection>
           <h2>Want to study in New Zealand?</h2>
           <p>If you're interested in starting your journey and would like to find out more information, one of our advisors is excited to help.</p>
-          <CTAButton to="/contact">Get Started</CTAButton>
+          {/* <StyledScrollLink to="contact" {...scrollProps}>Get Started</StyledScrollLink> */}
+          <CTAButton to="contact" {...scrollProps}>Get Started</CTAButton>
         </CTASection>
 
         <MainFooter>
@@ -324,22 +416,22 @@ const Footer = () => {
           </BrandColumn>
 
           <LinksGrid>
-            <LinkColumn>
+            {/* <LinkColumn>
               <h4>Partnerships</h4>
               <Link to="/partners/websites">Websites</Link>
               <Link to="/partners/social-media">Social Media</Link>
               <Link to="/partners/branding">Branding</Link>
-            </LinkColumn>
+            </LinkColumn> */}
             <LinkColumn>
               <h4>About</h4>
-              <Link to="/about">Our Why</Link>
-              <Link to="/portfolio">Our Work</Link>
-              <Link to="/careers">Careers</Link>
+              <StyledScrollLink to="about" {...scrollProps}>Our Why</StyledScrollLink>
+              <StyledScrollLink to="testimonials" {...scrollProps}>Our Work</StyledScrollLink>
+              {/* <Link to="/careers">Careers</Link> */}
             </LinkColumn>
             <LinkColumn>
               <h4>Support</h4>
-              <Link to="/support/request">Support Request</Link>
-              <Link to="/contact">Contact</Link>
+              {/* <Link to="/support/request">Support Request</Link> */}
+              <StyledScrollLink to="contact" {...scrollProps}>Contact</StyledScrollLink>
             </LinkColumn>
             <LinkColumn>
               <h4>Follow Us</h4>

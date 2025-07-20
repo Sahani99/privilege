@@ -110,7 +110,7 @@ const ChatFooter = styled.a`
 const WhatsAppWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const phoneNumber = 'YOUR_PHONE_NUMBER_HERE'; // <-- IMPORTANT
+  const phoneNumber = '701512427'; // <-- IMPORTANT
   const defaultMessage = "Hello! I saw your website and I have a question.";
   const encodedMessage = encodeURIComponent(defaultMessage);
 

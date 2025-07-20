@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const TestimonialsContainer = styled.section`
-  padding: 60px 20px;
-  background-color: #f4f4f4;
+  padding: 80px 20px;
+  background-color: var(--background-color);
 `;
 
 const Title = styled.h2`
   text-align: center;
-  font-size: 2.5em;
-  margin-bottom: 40px;
-  color: var(--secondary-color);
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: var(--heading-color);
 `;
 
 const TestimonialGrid = styled.div`
@@ -40,19 +40,21 @@ const TestimonialCard = styled.div`
 
 const Testimonials = () => {
   return (
+    <section id="testimonials">
     <TestimonialsContainer>
       <Title>Testimonials From Lawyers</Title>
       <TestimonialGrid>
         <TestimonialCard>
-          <p>"The team at NZRecruit is exceptionally professional. They provided my clients with clear, accurate guidance, making the student visa process seamless."</p>
+          <p>"The team at Privilege Education is exceptionally professional. They provided my clients with clear, accurate guidance, making the student visa process seamless."</p>
           <cite>- John Doe, Immigration Lawyer</cite>
         </TestimonialCard>
         <TestimonialCard>
-          <p>"I confidently refer my clients to NZRecruit. Their expertise and dedication are evident in their successful outcomes. A truly reliable partner."</p>
+          <p>"I confidently refer my clients to Privilege Education. Their expertise and dedication are evident in their successful outcomes. A truly reliable partner."</p>
           <cite>- Jane Smith, Legal Consultant</cite>
         </TestimonialCard>
       </TestimonialGrid>
     </TestimonialsContainer>
+    </section>
   );
 };
 

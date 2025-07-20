@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link as ScrollLink } from 'react-scroll';
 import { motion } from 'framer-motion';
 
 const HeroContainer = styled.div`
@@ -48,21 +49,46 @@ const HeroSubtitle = styled(motion.p)`
   color: var(--text-color);
 `;
 
-const CTAButton = styled(motion.a)`
-  background-color: var(--primary-color);
-  color: var(--background-color);
-  padding: 15px 35px;
+// const CTAButton = styled(motion.a)`
+//   background-color: var(--primary-color);
+//   color: var(--background-color);
+//   padding: 15px 35px;
+//   border-radius: 50px;
+//   text-decoration: none;
+//   font-weight: 600;
+//   transition: all 0.3s ease;
+//   display: inline-block;
+
+//   &:hover {
+//     filter: brightness(1.1);
+//     transform: translateY(-3px);
+//   }
+// `;
+
+const CTAButton = styled(ScrollLink)`
+  display: inline-block;
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 12px 30px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  display: inline-block;
 
   &:hover {
-    filter: brightness(1.1);
-    transform: translateY(-3px);
+    background-color: #FFD700;
+    color: #121212;
+    border-color: #FFD700;
   }
 `;
+
+  const scrollProps = {
+    spy: true,
+    smooth: true,
+    offset: -80,
+    duration: 500,
+  };
 
 const HeroSection = () => {
   const containerVariants = {
@@ -91,9 +117,7 @@ const HeroSection = () => {
         <HeroSubtitle variants={itemVariants}>
           We provide expert guidance for Sri Lankan students aiming for a world-class education and a brighter future.
         </HeroSubtitle>
-        <CTAButton href="/contact" variants={itemVariants}>
-          Get Started
-        </CTAButton>
+        <CTAButton to="contact" {...scrollProps}>Get Started</CTAButton>
       </HeroContent>
     </HeroContainer>
   );

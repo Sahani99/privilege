@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 
 const HeroContainer = styled.div`
   height: 90vh;
+  min-height: 600px; /* Ensures a minimum height on very tall/narrow screens */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   text-align: center;
-  color: var(--heading-color);
+  color: var(--heading-color); /* This should be white or a light color for dark themes */
   padding: 0 20px;
   
-  /* The ::before pseudo-element is used for the background image and overlay */
   &::before {
     content: '';
     position: absolute;
@@ -21,10 +21,7 @@ const HeroContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    
-    /* This is the previous image you liked, with a darker overlay for the dark theme */
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
-    
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -40,30 +37,15 @@ const HeroTitle = styled(motion.h1)`
   font-weight: 700;
   margin-bottom: 20px;
   text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+  color: #ffffff; /* Explicitly set white for readability on image */
 `;
 
 const HeroSubtitle = styled(motion.p)`
   font-size: clamp(1rem, 2vw, 1.5rem);
   margin-bottom: 30px;
   font-weight: 300;
-  color: var(--text-color);
+  color: #f0f0f0; /* Slightly off-white for subtitle */
 `;
-
-// const CTAButton = styled(motion.a)`
-//   background-color: var(--primary-color);
-//   color: var(--background-color);
-//   padding: 15px 35px;
-//   border-radius: 50px;
-//   text-decoration: none;
-//   font-weight: 600;
-//   transition: all 0.3s ease;
-//   display: inline-block;
-
-//   &:hover {
-//     filter: brightness(1.1);
-//     transform: translateY(-3px);
-//   }
-// `;
 
 const CTAButton = styled(ScrollLink)`
   display: inline-block;
@@ -75,6 +57,7 @@ const CTAButton = styled(ScrollLink)`
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: #FFD700;
@@ -83,20 +66,17 @@ const CTAButton = styled(ScrollLink)`
   }
 `;
 
-  const scrollProps = {
-    spy: true,
-    smooth: true,
-    offset: -80,
-    duration: 500,
-  };
+const scrollProps = {
+  spy: true,
+  smooth: true,
+  offset: -80,
+  duration: 500,
+};
 
 const HeroSection = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.3 }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
   };
 
   const itemVariants = {
@@ -106,11 +86,7 @@ const HeroSection = () => {
 
   return (
     <HeroContainer>
-      <HeroContent
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <HeroContent variants={containerVariants} initial="hidden" animate="visible">
         <HeroTitle variants={itemVariants}>
           Your Journey to a New Zealand Education Starts Here
         </HeroTitle>

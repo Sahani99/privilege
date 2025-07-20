@@ -4,21 +4,9 @@ import { motion } from 'framer-motion';
 import { FaUniversity, FaFileSignature, FaPlaneDeparture } from 'react-icons/fa';
 
 const services = [
-  {
-    icon: <FaUniversity />,
-    title: 'University Placement',
-    description: 'We help you find the right university and course that match your academic goals and career aspirations.'
-  },
-  {
-    icon: <FaFileSignature />,
-    title: 'Visa Assistance',
-    description: 'Our experts guide you through the entire student visa application process, ensuring a high success rate.'
-  },
-  {
-    icon: <FaPlaneDeparture />,
-    title: 'Pre-Departure Support',
-    description: 'We provide essential information and support to prepare you for your new life as a student in New Zealand.'
-  }
+  { icon: <FaUniversity />, title: 'University Placement', description: 'We help you find the right university and course that match your academic goals and career aspirations.' },
+  { icon: <FaFileSignature />, title: 'Visa Assistance', description: 'Our experts guide you through the entire student visa application process, ensuring a high success rate.' },
+  { icon: <FaPlaneDeparture />, title: 'Pre-Departure Support', description: 'We provide essential information and support to prepare you for your new life as a student in New Zealand.' }
 ];
 
 const ServicesContainer = styled.section`
@@ -31,6 +19,11 @@ const SectionTitle = styled.h2`
   font-size: 2.5rem;
   margin-bottom: 50px;
   color: var(--heading-color);
+
+  /* --- RESPONSIVE FIX --- */
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const ServicesGrid = styled.div`
@@ -81,26 +74,20 @@ const ServicesSection = () => {
   };
 
   return (
-   <section id="services"> 
+    <section id="services">
       <ServicesContainer>
         <SectionTitle>Our Core Services</SectionTitle>
         <ServicesGrid>
-        {services.map((service, index) => (
-          <ServiceCard
-            key={index}
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <IconWrapper>{service.icon}</IconWrapper>
-            <CardTitle>{service.title}</CardTitle>
-            <CardDescription>{service.description}</CardDescription>
-          </ServiceCard>
-        ))}
-      </ServicesGrid>
+          {services.map((service, index) => (
+            <ServiceCard key={index} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+              <IconWrapper>{service.icon}</IconWrapper>
+              <CardTitle>{service.title}</CardTitle>
+              <CardDescription>{service.description}</CardDescription>
+            </ServiceCard>
+          ))}
+        </ServicesGrid>
       </ServicesContainer>
-    </section> 
+    </section>
   );
 };
 

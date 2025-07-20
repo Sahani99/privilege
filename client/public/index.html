@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- ... your head content ... -->
-    <title>React App</title>
+    <!-- Your other head content like <meta charset="utf-8" /> etc. -->
+    
+    <!-- THIS IS THE FIX: The viewport tag is now inside the head and is NOT commented out -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <title>Privilege Education</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
-    <!--Start of Tawk.to Script-->
-    <!-- <script type="text/javascript">
+    <!-- 
+      Your Tawk.to script can be here, uncomment it when you are ready to use it.
+      Make sure to replace YOUR_ID with your actual Tawk.to property ID.
+    -->
+    <!--
+    <script type="text/javascript">
       var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
       (function(){
       var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
       s1.async=true;
-      s1.src='https://embed.tawk.to/YOUR_ID/default'; // This will have your real ID
+      s1.src='https://embed.tawk.to/YOUR_ID/default';
       s1.charset='UTF-8';
       s1.setAttribute('crossorigin','*');
       s0.parentNode.insertBefore(s1,s0);
       })();
-    </script> -->
-    <!--End of Tawk.to Script-->
-
+    </script>
+    -->
   </body>
 </html>

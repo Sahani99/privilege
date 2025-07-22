@@ -74,7 +74,7 @@ const CopyFeedback = styled.span`
 
 const ContactSection = () => {
   // --- Logic from EmailContact is now here, at the top level ---
-  const email = 'npk.aus@gmail.com';
+  const email = 'contact@privilegeeducation.lk ';
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -95,7 +95,7 @@ const ContactSection = () => {
             <p>Have a question? We'd love to hear from you. Reach out and we'll get back to you shortly.</p>
             <InfoItem>
               <FaMapMarkerAlt color="var(--primary-color)" size="1.5em" />
-              <span>123 Main Street, Colombo, Sri Lanka</span>
+              <span>No 71, Kadawatha, Kegalle</span>
             </InfoItem>
             <InfoItem>
               <FaPhone color="var(--primary-color)" size="1.5em" />

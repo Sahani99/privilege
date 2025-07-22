@@ -1,240 +1,168 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link as ScrollLink } from 'react-scroll';
-import { FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaFacebookF, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
+import { Link as RouterLink } from 'react-router-dom';
 import logo from '../../assets/images/logo.png'; 
+
+// --- Styled Components for the New Design ---
+
+// NEW: A separator line component for a clean visual break.
+const Separator = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+
+  /* Responsive margin for mobile to prevent touching screen edges */
+  @media (max-width: 768px) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+`;
 
 const FooterContainer = styled.footer`
   background-color: #121212;
   color: #a9a9a9;
-  padding: 40px 0 0;
-  position: relative;
-  overflow: hidden;
-  font-size: 16px;
-
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.06;
-  }
-
-  &::before {
-    width: 500px;
-    height: 500px;
-    background-color: #FFD700;
-    top: -200px;
-    right: -200px;
-  }
-
-  &::after {
-    width: 400px;
-    height: 400px;
-    background-color: #FFD700;
-    bottom: -150px;
-    left: -150px;
-  }
-`;
-
-const FooterContentWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
-`;
-
-const CTASection = styled.div`
+  padding: 60px 20px;
   text-align: center;
-  padding: 60px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
 
-  h2 {
-    color: #ffffff;
-    font-size: 32px;
-    margin: 0 0 15px;
-  }
+// const Logo = styled(RouterLink)`
+//   color: #ffffff;
+//   font-size: 2rem;
+//   font-weight: 700;
+//   text-decoration: none;
+//   display: inline-block;
+//   margin-bottom: 30px;
+// `;
 
-  p {
-    max-width: 500px;
-    margin: 0 auto 30px;
-    line-height: 1.7;
-  }
+const LogoLink = styled(RouterLink)`
+  display: inline-flex;      /* Use inline-flex to keep it centered */
+  flex-direction: column;   /* Stacks children vertically */
+  align-items: center;      /* Centers the children */
+  text-decoration: none;
+  margin-bottom: 30px;
+`;
 
-  /* --- RESPONSIVE FIX --- */
-  @media (max-width: 768px) {
-    padding: 40px 0;
-    h2 { font-size: 24px; }
-    p { font-size: 14px; }
+const LogoImage = styled.img`
+  height: 50px;           /* Adjust the size as needed */
+  margin-bottom: 15px;      /* Space between the logo and the text */
+`;
+
+const LogoText = styled.span`
+  color: #ffffff;
+  font-size: 1.5rem; /* Slightly adjusted for balance with the logo */
+  font-weight: 700;
+`;
+const NavLinks = styled.nav`
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Ensures items are centered in column layout */
+  margin-bottom: 30px;
+  
+  /* MOBILE-FIRST STYLES: Default is a vertical column */
+  flex-direction: column;
+  gap: 20px; /* A nice vertical gap for mobile */
+  
+  /* DESKTOP STYLES: Switch to a horizontal row for screens wider than 768px */
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 150px; /* Your desired large gap for desktop */
   }
 `;
 
-const CTAButton = styled(ScrollLink)`
-  display: inline-block;
-  background-color: transparent;
+const StyledLink = styled(ScrollLink)`
   color: #ffffff;
-  border: 2px solid #ffffff;
-  padding: 12px 30px;
-  border-radius: 50px;
   text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #FFD700;
+  }
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+`;
+
+const SocialIcon = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
 
   &:hover {
     background-color: #FFD700;
     color: #121212;
-    border-color: #FFD700;
+    transform: translateY(-3px);
   }
 `;
 
-const MainFooter = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 60px 0;
-  gap: 40px;
-
-  /* --- RESPONSIVE FIX --- */
-  @media (max-width: 768px) {
-    padding: 40px 0;
-    text-align: center; /* Center align columns on mobile */
-  }
-`;
-
-const BrandColumn = styled.div`
-  flex: 1 1 300px; /* Allow growing and shrinking with a base of 300px */
-  
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center brand content */
-  }
-`;
-
-const LinksGrid = styled.div`
-  flex: 2 1 600px; /* Allow growing and shrinking */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Fully responsive grid */
-  gap: 30px;
-`;
-
-const LinkColumn = styled.div`
-  h4 {
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 0 0 20px;
-  }
-  a, p {
-    color: #a9a9a9;
-    text-decoration: none;
-    display: block;
-    margin-bottom: 12px;
-  }
-  a:hover {
-    color: #FFD700;
-  }
-`;
-
-const SocialIcons = styled.div`
-  display: flex;
-  gap: 16px;
-  font-size: 20px;
-  
-  @media (max-width: 768px) {
-    justify-content: center; /* Center icons on mobile */
-  }
-`;
-
-const BottomBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 25px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+const CopyrightText = styled.p`
   font-size: 14px;
-  gap: 15px; /* Add gap for wrapping */
-
-  /* --- RESPONSIVE FIX --- */
-  @media (max-width: 768px) {
-    flex-direction: column;
-    justify-content: center;
-  }
+  color: #6c757d;
+  margin: 0;
 `;
 
-const LogoImage = styled.img`
-  height: 40px;
-  margin-bottom: 20px;
-`;
-
-const StyledScrollLink = styled(ScrollLink)`
-  color: #a9a9a9;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 12px;
-  cursor: pointer;
-  &:hover {
-    color: #FFD700;
-  }
-`;
-
-const scrollProps = {
-  spy: true,
-  smooth: true,
-  offset: -80,
-  duration: 500,
-};
+// --- The Main Footer Component ---
 
 const Footer = () => {
+  const scrollProps = {
+    spy: true,
+    smooth: true,
+    offset: -80,
+    duration: 500,
+  };
+
   return (
-    <FooterContainer>
-      <FooterContentWrapper>
-        <CTASection>
-          <h2>Want to study in New Zealand?</h2>
-          <p>If you're interested in starting your journey and would like to find out more information, one of our advisors is excited to help.</p>
-          <CTAButton to="contact" {...scrollProps}>Get Started</CTAButton>
-        </CTASection>
+    // Use a React Fragment to group the Separator and Footer
+    <>
+      <Separator />
+      <FooterContainer>
+        <LogoLink to="/">
+          <LogoImage src={logo} alt="Privilege Education Logo" />
+          <LogoText>Privilege Education</LogoText>
+        </LogoLink>
 
-        <MainFooter>
-          <BrandColumn>
-            <LogoImage src={logo} alt="Privilege Education Logo" />
-            <h3 style={{ color: 'white', fontSize: '24px', margin: 0 }}>Privilege Education</h3>
-          </BrandColumn>
+        <NavLinks>
+          <StyledLink to="about" {...scrollProps}>About</StyledLink>
+          <StyledLink to="testimonials" {...scrollProps}>Testimonials</StyledLink>
+          <StyledLink to="contact" {...scrollProps}>Contact</StyledLink>
+        </NavLinks>
 
-          <LinksGrid>
-            <LinkColumn>
-              <h4>About</h4>
-              <StyledScrollLink to="about" {...scrollProps}>Our Why</StyledScrollLink>
-              <StyledScrollLink to="testimonials" {...scrollProps}>Testimonials</StyledScrollLink>
-            </LinkColumn>
-            <LinkColumn>
-              <h4>Support</h4>
-              <StyledScrollLink to="contact" {...scrollProps}>Contact</StyledScrollLink>
-            </LinkColumn>
-            <LinkColumn>
-              <h4>Follow Us</h4>
-              <SocialIcons>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-              </SocialIcons>
-            </LinkColumn>
-          </LinksGrid>
-        </MainFooter>
+        <SocialLinks>
+          <SocialIcon href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <FaFacebookF />
+          </SocialIcon>
+          <SocialIcon href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <FaTwitter />
+          </SocialIcon>
+          <SocialIcon href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <FaLinkedinIn />
+          </SocialIcon>
+        </SocialLinks>
 
-        <BottomBar>
-          <p>© {new Date().getFullYear()} Privilege Education. All rights reserved.</p>
-          <Link to="/privacy-policy" style={{color: '#a9a9a9', textDecoration: 'none'}}>Privacy Policy</Link>
-        </BottomBar>
-      </FooterContentWrapper>
-    </FooterContainer>
+        <CopyrightText>
+          © {new Date().getFullYear()} Privilege Education. All rights reserved.
+        </CopyrightText>
+      </FooterContainer>
+    </>
   );
 };
 

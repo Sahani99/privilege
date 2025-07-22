@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link as ScrollLink } from 'react-scroll';
 import { motion } from 'framer-motion';
 
+const heroImageUrl = '/images/hero-background.avif';
+
 const HeroContainer = styled.div`
   height: 90vh;
   min-height: 600px; /* Ensures a minimum height on very tall/narrow screens */
@@ -21,7 +23,7 @@ const HeroContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${props => props.bgImage});
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -85,7 +87,7 @@ const HeroSection = () => {
   };
 
   return (
-    <HeroContainer>
+    <HeroContainer bgImage={heroImageUrl}>
       <HeroContent variants={containerVariants} initial="hidden" animate="visible">
         <HeroTitle variants={itemVariants}>
           Your Journey to a New Zealand Education Starts Here

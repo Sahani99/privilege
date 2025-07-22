@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-const aboutImage = 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop';
+
+const aboutImageUrl = '/images/about.avif';
 
 const AboutContainer = styled.section`
   padding: 80px 20px;
@@ -66,7 +67,7 @@ const AboutSnippet = () => {
     <section id="about">
       <AboutContainer>
         <ImageWrapper variants={imageVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
-          <img src={aboutImage} alt="Happy students collaborating" />
+          <img src={aboutImageUrl} alt="Happy students collaborating" />
         </ImageWrapper>
         <ContentWrapper variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
           <Title>Your Trusted Partner in International Education</Title>

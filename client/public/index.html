@@ -16,18 +16,43 @@
       Your Tawk.to script can be here, uncomment it when you are ready to use it.
       Make sure to replace YOUR_ID with your actual Tawk.to property ID.
     -->
-    <!--
-    <script type="text/javascript">
-      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-      (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/YOUR_ID/default';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
-      })();
-    </script>
-    -->
+    
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+  // --- THE FIX: Tawk_API object must be defined FIRST ---
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+
+  
+  Tawk_API.customStyle = {
+    'visibility' : {
+      'desktop' : {
+        'position' : 'br',
+        'xOffset' : 20,
+        'yOffset' : 100
+      },
+      'mobile' : {
+        'position' : 'br',
+        'xOffset' : 20,
+        'yOffset' : 90
+      }
+    }
+  };
+
+  var Tawk_LoadStart = new Date();
+  
+  // This function loads the external script
+
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/687a1db63606072bf84a4c7f/1j0eg863v';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+
+</script>
+<!--End of Tawk.to Script-->
+   
   </body>
 </html>

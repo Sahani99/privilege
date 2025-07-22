@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { FaWhatsapp } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
@@ -46,6 +46,13 @@ const ChatWindow = styled.div`
   z-index: 1000;
   animation: ${fadeIn} 0.3s ease-out;
   display: ${props => props.isOpen ? 'block' : 'none'}; /* Control visibility */
+
+    @media (max-width: 480px) {
+    width: auto; /* Allow it to shrink */
+    left: 20px;  /* Pin to the left edge */
+    right: 20px; /* Pin to the right edge */
+    bottom: 90px;/* Adjust bottom position for mobile */
+  }
 `;
 
 const ChatHeader = styled.div`
@@ -109,16 +116,32 @@ const ChatFooter = styled.a`
 
 const WhatsAppWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const chatWindowRef = useRef(null); 
 
   const phoneNumber = '701512427'; // <-- IMPORTANT
   const defaultMessage = "Hello! I saw your website and I have a question.";
   const encodedMessage = encodeURIComponent(defaultMessage);
+  
+  useEffect(() => {
+    // Function to handle clicks
+    function handleClickOutside(event) {
+      if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    // Add event listener when the component mounts
+    document.addEventListener("mousedown", handleClickOutside);
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [chatWindowRef]); // Dependency array
 
   const toggleChatWindow = () => setIsOpen(!isOpen);
-
   return (
     <>
-      <ChatWindow isOpen={isOpen}>
+      <div ref={chatWindowRef}>
+        <ChatWindow isOpen={isOpen}>
         <ChatHeader>
           <Avatar />
           <HeaderInfo>
@@ -140,8 +163,9 @@ const WhatsAppWidget = () => {
           Start Chat
         </ChatFooter>
       </ChatWindow>
+      </div>
       
-      <FloatingButton onClick={toggleChatWindow}>
+       <FloatingButton onClick={toggleChatWindow}>
         {isOpen ? <IoClose size={30} /> : <FaWhatsapp />}
       </FloatingButton>
     </>

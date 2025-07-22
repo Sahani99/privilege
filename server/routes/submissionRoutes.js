@@ -3,6 +3,16 @@ const router = express.Router();
 const multer = require('multer');
 const Submission = require('../models/Submission');
 const auth = require('../middleware/authMiddleware');
+const nodemailer = require('nodemailer');
+
+// --- 2. Configure the email transporter ---
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 // Configure Multer. For now, we'll use memory storage.
 // In a full production system, you'd configure this to upload to a service like AWS S3.
@@ -28,9 +38,25 @@ router.post('/', upload.single('cv'), async (req, res) => {
     });
 
     const submission = await newSubmission.save();
+
+     const mailOptions = {
+      from: `"${submission.name}" <${process.env.EMAIL_USER}>`, // Sender name and address
+      to: process.env.EMAIL_USER, // The admin's email address
+      subject: `New Contact Form Submission from ${submission.name}`,
+      html: `
+        <h1>New Submission Received</h1>
+        <p><strong>Name:</strong> ${submission.name}</p>
+        <p><strong>Email:</strong> ${submission.email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${submission.message}</p>
+      `,
+    };
+    await transporter.sendMail(mailOptions);
+    console.log('Notification email sent successfully');
+
     res.json(submission);
   } catch (err) {
-    console.error('Submission Error:', err.message);
+    console.error('Error in submission route:', err.message);
     res.status(500).send('Server Error');
   }
 });

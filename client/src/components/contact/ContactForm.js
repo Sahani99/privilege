@@ -61,13 +61,23 @@ const Input = styled.input`
   }
 `;
 
-const Select = styled.select`
+const Select = styled(Input).attrs({ as: 'select' })`
   padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 1em;
-  background-color: white;
+  background-color: black
+  border-color: rgba(255, 255, 255, 0.2);
+  
+  // Style for the <option> elements in the list
+  option {
+    background: black;
+    color: white;
+      appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  }
 `;
 
 const FileInput = styled(Input)`
